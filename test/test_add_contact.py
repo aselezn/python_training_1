@@ -16,7 +16,6 @@ class TestAddContact(unittest.TestCase):
                                             phone_home="55555", mobile_home="22222", phone_work="33333", fax="44444", email_1="email1@mail.ru", email_2="email2@mail.ru", email_3="email3@mail.ru",
                                             homepage="homepage", bday= "1", bmonth="January", byear="2000", aday="2", amonth="February", ayear="2000", address_2="address, 2", phone_home_2="9999",
                                             notes="notes"))
-        self.enter_contact_creation()
         self.logout()
 
     def logout(self):
@@ -31,7 +30,6 @@ class TestAddContact(unittest.TestCase):
     def enter_contact_creation(self):
         wd = self.wd
         wd.find_element_by_xpath("//div[@id='content']/form/input[21]").click()
-        self.retern_to_home_page()
 
     def fill_contact_form(self, contact):
         wd = self.wd
@@ -104,6 +102,8 @@ class TestAddContact(unittest.TestCase):
         wd.find_element_by_name("notes").click()
         wd.find_element_by_name("notes").clear()
         wd.find_element_by_name("notes").send_keys(contact.notes)
+        self.enter_contact_creation()
+        self.retern_to_home_page()
 
     def open_contact_add_form(self):
         wd = self.wd
