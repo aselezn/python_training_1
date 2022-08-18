@@ -2,6 +2,7 @@ from selenium import webdriver
 from selenium.webdriver.support.ui import Select
 from selenium.common.exceptions import NoSuchElementException
 from fixture.session import SessionHelper
+from fixture.group import GroupHelper
 
 class Application:
 
@@ -9,6 +10,7 @@ class Application:
         self.wd = webdriver.Chrome()
         self.wd.implicitly_wait(60)
         self.session = SessionHelper(self)
+        self.group = GroupHelper(self)
 
     def return_to_groups_page(self):
         wd = self.wd
