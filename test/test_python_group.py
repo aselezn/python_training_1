@@ -3,7 +3,7 @@ import pytest
 from model.group import Group
 from fixture.application import Application
 
-#инизиализатор фикстуры
+
 @pytest.fixture
 def app(request):
     fixture = Application()
