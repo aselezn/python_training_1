@@ -1,4 +1,5 @@
 from selenium import webdriver
+from selenium.webdriver.support.ui import Select
 from selenium.common.exceptions import NoSuchElementException
 
 class Application:
@@ -147,6 +148,7 @@ class Application:
         try:self.wd.find_element(by=how, value=what)
         except NoSuchElementException as e: return False
         return True
+
 
     def destroy(self):
         self.wd.quit()
