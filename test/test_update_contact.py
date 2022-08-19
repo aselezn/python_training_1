@@ -1,6 +1,6 @@
 from model.contact import Contact
 
-def test_add_contact(app):
+def test_update_contact(app):
     app.session.login(username="admin", password="secret")
     app.contact.update_contact(Contact (name="name_updated", middlename="middlename_updated", lastname="lastname_updated", nickname="nickname_updated", title="title_updated", company="company_updated", address_1="address, 1 updated",
                                             phone_home="5555511", mobile_home="2222211", phone_work="3333311", fax="4444411", email_1="email_1_updated@mail.ru", email_2="email_2_updated@mail.ru", email_3="email_3_updated@mail.ru",
