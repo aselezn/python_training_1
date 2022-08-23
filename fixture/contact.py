@@ -10,6 +10,7 @@ class ContactHelper:
         wd.find_element_by_link_text("add new").click()
         wd.get("http://localhost/addressbook/edit.php")
 
+
     def fill_contact_form(self, contact):
         wd = self.app.wd
         wd.find_element_by_name("firstname").click()
@@ -88,15 +89,18 @@ class ContactHelper:
         self.enter_contact_creation()
         self.retern_to_home_page()
 
+
     def retern_to_home_page(self):
         wd = self.app.wd
         wd.find_element_by_link_text("home").click()
         wd.get("http://localhost/addressbook/")
 
+
     def enter_contact_creation(self):
         wd = self.app.wd
         wd.find_element_by_xpath("//div[@id='content']/form/input[21]").click()
         self.retern_to_home_page()
+
 
     def delete_first_contact(self):
         wd = self.app.wd
@@ -107,6 +111,7 @@ class ContactHelper:
         wd.find_element_by_xpath("//input[@value='Delete']").click()
         wd.switch_to.alert.accept()
         self.retern_to_home_page()
+
 
     def update_contact(self, contact):
         wd = self.app.wd
@@ -120,4 +125,3 @@ class ContactHelper:
         wd.find_element_by_xpath("//div[@id='content']/form/input[22]").click()
         wd.get("http://localhost/addressbook/edit.php")
         self.retern_to_home_page()
-
