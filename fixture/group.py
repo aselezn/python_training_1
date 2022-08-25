@@ -23,12 +23,12 @@ class GroupHelper:
         self.change_field_value('group_header', group.header)
         self.change_field_value('group_footer', group.footer)
 
-    def change_field_value(self, feild_name, text):
+    def change_field_value(self, field_name, text):
         wd = self.app.wd
         if text is not None:
-            wd.find_element_by_name(feild_name).click()
-            wd.find_element_by_name(feild_name).clear()
-            wd.find_element_by_name(feild_name).send_keys(text)
+            wd.find_element_by_name(field_name).click()
+            wd.find_element_by_name(field_name).clear()
+            wd.find_element_by_name(field_name).send_keys(text)
 
     def return_to_groups_page(self):
         wd = self.app.wd
