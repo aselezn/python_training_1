@@ -113,7 +113,7 @@ class ContactHelper:
         self.retern_to_home_page()
 
 
-    def update_contact(self, contact):
+    def modify_first_contact(self, contact):
         wd = self.app.wd
         self.app.open_home_page()
         # select update first contact
@@ -125,3 +125,8 @@ class ContactHelper:
         wd.find_element_by_xpath("//div[@id='content']/form/input[22]").click()
         wd.get("http://localhost/addressbook/edit.php")
         self.retern_to_home_page()
+
+    def count(self):
+        wd = self.app.wd
+        self.app.open_home_page()
+        return len(wd.find_elements_by_name("selected[]"))
