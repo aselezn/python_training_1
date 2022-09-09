@@ -133,12 +133,23 @@ class ContactHelper:
         return len(wd.find_elements_by_name("selected[]"))
 
 
+    #def get_contact_list(self):
+        #wd = self.app.wd
+        #self.app.open_home_page()
+        #contacts = []
+        #elements = wd.find_elements_by_css_selector("#maintable > tbody > tr")[1:]
+       # for element in elements:
+            #id = element.find_element_by_css_selector("input").get_attribute('id')
+            #contacts.append(Contact(id=id))
+        #return contacts
+
     def get_contact_list(self):
         wd = self.app.wd
         self.app.open_home_page()
         contacts = []
-        elements = wd.find_elements_by_css_selector("#maintable > tbody > tr")[1:]
+        elements = wd.find_elements_by_css_selector("tr[name=entry]")
         for element in elements:
+            text = element.text
             id = element.find_element_by_css_selector("input").get_attribute('id')
-            contacts.append(Contact(id=id))
+            contacts.append(Contact(name=text, id=id))
         return contacts
