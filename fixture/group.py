@@ -66,7 +66,7 @@ class GroupHelper:
         self.modify_group_by_index(0) #удаляем первую грппу (счет всегда идет с 0)
 
 
-    def modify_group_by_index(self, index, new_group_data): #удаляем случайную группу
+    def modify_group_by_index(self, index, new_group_data): #редактируем случайную группу
         wd = self.app.wd
         self.open_groups_page()
         self.select_group_by_index(index)
@@ -90,7 +90,7 @@ class GroupHelper:
 
 
     def get_group_list(self):
-        if self.group_cache is None:
+        if not self.group_cache:
             wd = self.app.wd
             self.open_groups_page()
             self.group_cache = []
