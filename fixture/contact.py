@@ -102,30 +102,45 @@ class ContactHelper:
         wd.find_element_by_xpath("//div[@id='content']/form/input[21]").click()
         self.retern_to_home_page()
 
+    def select_contact_by_index(self, index):
+        wd = self.app.wd
+        wd.find_elements_by_name("selected[]")[index].click()
 
-    def delete_first_contact(self):
+
+    def delete_contact_by_index(self, index):
         wd = self.app.wd
         self.app.open_home_page()
-        # select first contact
+        self.select_contact_by_index(index)
+        # select contact
         wd.find_element_by_name("selected[]").click()
         # submit deletion
         wd.find_element_by_xpath("//input[@value='Delete']").click()
         wd.switch_to.alert.accept()
         self.retern_to_home_page()
+        self.contact_cache = None  # сбрасываем кеш, при следующем обращении к get_contact_list будет стоиться заново в этом методе
 
 
-    def modify_first_contact(self, contact):
+    def delete_first_contact(self):
+        self.delete_contact_by_index(0) #удаляем первый контакт (счет всегда идет с 0)
+
+
+    def modify_contact_by_indeх(self, index, new_contact_data):
         wd = self.app.wd
         self.app.open_home_page()
-        # select update first contact
+        self.select_contact_by_index(index)
         wd.find_element_by_xpath("//img[@alt='Edit']").click()
         wd.get("http://localhost/addressbook/edit.php?id=5")
         # update contact form
-        self.fill_contact_form(contact)
+        self.fill_contact_form(new_contact_data)
         # submit edit
         wd.find_element_by_xpath("//div[@id='content']/form/input[22]").click()
         wd.get("http://localhost/addressbook/edit.php")
         self.retern_to_home_page()
+        self.contact_cache = None  # сбрасываем кеш, при следующем обращении к get_contact_list будет стоиться заново в этом методе
+
+
+    def modify_first_contact(self):
+        self.modify_contact_by_indeх(0)
 
     def count(self):
         wd = self.app.wd
@@ -143,13 +158,25 @@ class ContactHelper:
             #contacts.append(Contact(id=id))
         #return contacts
 
+    contact_cache = None
+
+
     def get_contact_list(self):
-        wd = self.app.wd
-        self.app.open_home_page()
-        contacts = []
-        elements = wd.find_elements_by_css_selector("tr[name=entry]")
-        for element in elements:
-            text = element.text
-            id = element.find_element_by_css_selector("input").get_attribute('id')
-            contacts.append(Contact(name=text, id=id))
-        return contacts
+        if self.contact_cache is None:
+            wd = self.app.wd
+            self.app.open_home_page()
+            self.contact_cache = []
+            elements = wd.find_elements_by_css_selector("tr[name=entry]")
+            for element in elements:
+                cells = element.find_elements_by_tag_name("td")
+                name = cells[2].text
+                lastname = cells[1].text
+                address_1 = cells[3].text
+                id = element.find_element_by_name("selected[]").get_attribute("value")
+                all_phones = cells[5].text
+                all_emails = cells[4].text
+                self.contact_cache.append(Contact(name=name, lastname=lastname, id=id, address_1=address_1,
+                                                  all_phones_from_home_page=all_phones,
+                                                  all_emails_from_home_page=all_emails))
+        return list(self.contact_cache)
+
