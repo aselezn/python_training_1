@@ -1,5 +1,6 @@
 from selenium.webdriver.support.ui import Select
 from model.contact import Contact
+import re
 
 class ContactHelper:
 
@@ -111,8 +112,6 @@ class ContactHelper:
         wd = self.app.wd
         self.app.open_home_page()
         self.select_contact_by_index(index)
-        # select contact
-        # submit deletion
         wd.find_element_by_xpath("//input[@value='Delete']").click()
         wd.switch_to.alert.accept()
         self.retern_to_home_page()
@@ -171,10 +170,50 @@ class ContactHelper:
                 lastname = cells[1].text
                 address_1 = cells[3].text
                 id = element.find_element_by_name("selected[]").get_attribute("value")
-                all_phones = cells[5].text
-                all_emails = cells[4].text
+                all_phones = cells[5].text.splitlines()
                 self.contact_cache.append(Contact(name=name, lastname=lastname, id=id, address_1=address_1,
-                                                  all_phones_from_home_page=all_phones,
-                                                  all_emails_from_home_page=all_emails))
+                                                  phone_home=all_phones[0], mobile_home=all_phones[1],
+                                                  phone_work= all_phones[2], phone_home_2=all_phones[3]))
         return list(self.contact_cache)
+
+
+    def open_contact_view_by_index(self, index):
+        wd = self.app.wd
+        self.app.open_home_page()
+        wd.find_elements_by_xpath("//img[@alt='Details']")[index].click()
+
+    def get_contact_from_view_page(self, index):
+        wd = self.app.wd
+        self.open_contact_view_by_index(index)
+        text = wd.find_element_by_id("content").text
+        phone_home = re.search("H: (.*)", text).group(1)
+        mobile_home = re.search("M: (.*)", text).group(1)
+        phone_work = re.search("W: (.*)", text).group(1)
+        phone_home_2 = re.search("P: (.*)", text).group(1)
+        return Contact(phone_home=phone_home, mobile_home=mobile_home,
+                       phone_work=phone_work, phone_home_2=phone_home_2)
+
+
+
+    def open_contact_to_edit_by_index(self, index):
+        wd = self.app.wd
+        self.app.open_home_page()
+        wd.find_elements_by_xpath("//img[@alt='Edit']")[index].click()
+
+
+    def get_contact_info_from_edit_page(self, index):
+        wd = self.app.wd
+        self.app.open_home_page()
+        self.open_contact_to_edit_by_index(index)
+        name = wd.find_element_by_name("firstname").get_attribute("value")
+        lastname = wd.find_element_by_name("lastname").get_attribute("value")
+        id = wd.find_element_by_name("id").get_attribute("value")
+        phone_home = wd.find_element_by_name("home").get_attribute("value")
+        mobile_home = wd.find_element_by_name("mobile").get_attribute("value")
+        phone_work = wd.find_element_by_name("work").get_attribute("value")
+        phone_home_2 = wd.find_element_by_name("phone2").get_attribute("value")
+        return Contact(name=name, lastname=lastname, id=id,
+                       phone_home=phone_home, mobile_home=mobile_home,
+                       phone_work= phone_work, phone_home_2=phone_home_2)
+
 
