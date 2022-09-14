@@ -112,7 +112,6 @@ class ContactHelper:
         self.app.open_home_page()
         self.select_contact_by_index(index)
         # select contact
-        wd.find_element_by_name("selected[]").click()
         # submit deletion
         wd.find_element_by_xpath("//input[@value='Delete']").click()
         wd.switch_to.alert.accept()
@@ -127,13 +126,12 @@ class ContactHelper:
     def modify_contact_by_indeх(self, index, new_contact_data):
         wd = self.app.wd
         self.app.open_home_page()
-        self.select_contact_by_index(index)
-        wd.find_element_by_xpath("//img[@alt='Edit']").click()
+        wd.find_elements_by_xpath("//img[@alt='Edit']")[index].click()
         wd.get("http://localhost/addressbook/edit.php?id=5")
         # update contact form
         self.fill_contact_form(new_contact_data)
         # submit edit
-        wd.find_element_by_xpath("//div[@id='content']/form/input[22]").click()
+        wd.find_element_by_name("update").click()
         wd.get("http://localhost/addressbook/edit.php")
         self.retern_to_home_page()
         self.contact_cache = None  # сбрасываем кеш, при следующем обращении к get_contact_list будет стоиться заново в этом методе
