@@ -12,7 +12,7 @@ class Group:
 
 #метод для репрезинтации атрибутов
     def __repr__(self):
-        return '%s:%s' % (self.id, self.name)
+        return '%s:%s;%s;%s' % (self.id, self.name, self.header, self.footer)
 
 
 #для сравнение атрибутов логически, а не физически (до этой функции система сравнивала объекты по местонахождению в памяти)

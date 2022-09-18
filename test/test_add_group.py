@@ -1,20 +1,23 @@
 # -*- coding: utf-8 -*-
 from model.group import Group
+import pytest
 
 
-def test_add_group(app):
-    testdata = [
+testdata = [
         Group(name="fhfhfh", header="hfhfhfh", footer="fhfhhf"),
         Group(name="", header="", footer="")
     ]
-    for group in testdata:
-        pass
-        #old_groups = app.group.get_group_list()
-        #app.group.create(group)
-        #assert len(old_groups) + 1 == app.group.count() #используем count (выступает в роли хэша), выполянется быстрее чем основная функция
-        #new_groups = app.group.get_group_list()
-        #old_groups.append(group)
-        #assert sorted(old_groups, key=Group.id_or_max) == sorted(new_groups, key=Group.id_or_max)
+
+
+@pytest.mark.parametrize("group", testdata, ids=[repr(x) for x in testdata])  #название параметра/источник тестовых данных/ преобразовали в список тестовые данные
+def test_add_group(app, group):
+    pass
+    #old_groups = app.group.get_group_list()
+    #app.group.create(group)
+    #assert len(old_groups) + 1 == app.group.count() #используем count (выступает в роли хэша), выполянется быстрее чем основная функция
+    #new_groups = app.group.get_group_list()
+    #old_groups.append(group)
+    #assert sorted(old_groups, key=Group.id_or_max) == sorted(new_groups, key=Group.id_or_max)
 
 #def test_add_empty_group(app):
     #old_groups = app.group.get_group_list()
