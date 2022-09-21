@@ -24,6 +24,10 @@ def clear(s): #метод для очистки поля
     return re.sub("[ \n () -]", "", s) #первый параметр - шаблон(что заменять)/второй - на что заменять/ третий - где заменять
 
 
+def clear_emails(s): #метод для очистки поля
+    return re.sub(" +", " ", s)
+
+
 def merge_phones_like_on_home_page(contact):
     return "\n".join(filter(lambda x: x != "",
                              map(lambda x: clear(x),
@@ -32,8 +36,8 @@ def merge_phones_like_on_home_page(contact):
 
 
 def merge_emails_like_on_home_page(contact):
-    return "\n".join(filter(lambda x: x != '',
-                            map(lambda x: clear(x),
+    return "\n".join(filter(lambda x: x != "",
+                            map(lambda x: clear_emails(x),
                                 filter(lambda x: x is not None,
                                        [contact.email_1, contact.email_2, contact.email_3]))))
 
