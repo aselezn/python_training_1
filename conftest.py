@@ -1,20 +1,21 @@
 import pytest
 from fixture.application import Application
+import json
 
 fixture = None
-
+target = None
 
 @pytest.fixture
 def app(request):
     global fixture
-    if fixture is None:
-        browser = request.config.getoption("--browser")
-        base_url = request.config.getoption("--baseUrl")
-        fixture = Application(browser=browser, base_url=base_url)
-    else:
-        if not fixture.is_valid():
-            fixture = Application()
-    fixture.session.ensure_login(username="admin", password="secret")
+    global target
+    browser = request.config.getoption("--browser")
+    if target is None: #проверка: загрузка конфигурации, если она еще не загружена и ранее не была прочитана
+        with open(request.config.getoption("--target")) as config_file:
+            target = json.load(config_file)
+    if fixture is None or not fixture.is_valid():
+        fixture = Application(browser=browser, base_url=target['baseUrl'])
+    fixture.session.ensure_login(username=target['username'], password=target['password'])
     return fixture
 
 
@@ -28,5 +29,5 @@ def stop(request):
 
 def pytest_addoption(parser):
     parser.addoption("--browser", action="store", default="chrome")
-    parser.addoption("--baseUrl", action="store", default="http://localhost/addressbook/index.php")
+    parser.addoption("--target", action="store", default="target.json")
 
