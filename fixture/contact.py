@@ -10,7 +10,7 @@ class ContactHelper:
     def open_contact_add_form(self):
         wd = self.app.wd
         wd.find_element_by_link_text("add new").click()
-        wd.get("http://localhost/addressbook/edit.php")
+        #wd.get("http://localhost/addressbook/edit.php")
 
 
     def fill_contact_form(self, contact):
@@ -97,7 +97,7 @@ class ContactHelper:
     def retern_to_home_page(self):
         wd = self.app.wd
         wd.find_element_by_link_text("home").click()
-        wd.get("http://localhost/addressbook/")
+        #wd.get("http://localhost/addressbook/")
 
 
     def enter_contact_creation(self):
@@ -133,7 +133,7 @@ class ContactHelper:
         self.fill_contact_form(new_contact_data)
         # submit edit
         wd.find_element_by_name("update").click()
-        wd.get("http://localhost/addressbook/edit.php")
+        #wd.get("http://localhost/addressbook/edit.php")
         self.retern_to_home_page()
         self.contact_cache = None  # сбрасываем кеш, при следующем обращении к get_contact_list будет стоиться заново в этом методе
 
