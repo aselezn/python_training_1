@@ -1,19 +1,8 @@
 # -*- coding: utf-8 -*-
 from model.group import Group
 import pytest
-import random
-import string
-
-
-def random_string(prefix, maxlen):
-    symbols = string.ascii_letters + string.digits + " "*10 #в переменной будут буквы + символы + пунктуация + 10 раз повторяем пробел
-    return prefix + "".join([random.choice(symbols) for i in range(random.randrange(maxlen))]) #генерируется случайная длина строки не превышающая максимальную
-
-
-testdata = [Group(name="", header="", footer="")] + [
-        Group(name=random_string("name",10), header=random_string("header",20), footer=random_string("footer",20))
-        for i in range(5) #5 раз создаем группы с рандомными данными
-]
+from data.add_group import testdata
+#from data.add_group import constant as testdata - подменить переменную на другую можно, если переименовать ее
 
 
 @pytest.mark.parametrize("group", testdata, ids=[repr(x) for x in testdata])  #название параметра/источник тестовых данных/ преобразовали в список тестовые данные
