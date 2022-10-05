@@ -7,9 +7,17 @@ connection = pymysql.connect(host='127.0.0.1',
                              database='addressbook'
                             )
 
+#try:
+    #cursor = connection.cursor()
+    #cursor.execute("select * from group_list") #добавить для контактов
+    #for row in cursor.fetchall():
+        #print(row)
+#finally:
+    #connection.close()
+
 try:
     cursor = connection.cursor()
-    cursor.execute("select * from group_list")
+    cursor.execute("select * from addressbook") #добавить для контактов
     for row in cursor.fetchall():
         print(row)
 finally:

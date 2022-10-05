@@ -12,7 +12,7 @@ target = None
 def load_config(file):
     global target
     if target is None: #проверка: загрузка конфигурации, если она еще не загружена и ранее не была прочитана
-        config_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), file))  #получаем директорию, в которой лежит файл
+        config_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), file)  #получаем директорию, в которой лежит файл
         with open(config_file) as f: #config_file - путь к файлу/ f - объект в этом файле
             target = json.load(f)
 
@@ -28,7 +28,7 @@ def app(request):
     return fixture
 
 
-@pytest.fixture(scope='session')
+@pytest.fixture(scope="session")
 def db(request):
     db_config = load_config(request.config.getoption("--target"))['db']
     dbfixture = DbFixture(host=db_config['host'], name=db_config['name'], user=db_config['user'], password=db_config['password'])
