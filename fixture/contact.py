@@ -92,6 +92,7 @@ class ContactHelper:
         self.fill_contact_form(contact)
         self.enter_contact_creation()
         self.retern_to_home_page()
+        self.contact_cache = None
 
 
     def retern_to_home_page(self):

@@ -15,6 +15,7 @@ def load_config(file):
         config_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), file)  #получаем директорию, в которой лежит файл
         with open(config_file) as f: #config_file - путь к файлу/ f - объект в этом файле
             target = json.load(f)
+    return target
 
 
 @pytest.fixture
