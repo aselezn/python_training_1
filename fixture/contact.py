@@ -135,7 +135,7 @@ class ContactHelper:
         wd.find_element_by_name("update").click()
         #wd.get("http://localhost/addressbook/edit.php")
         self.retern_to_home_page()
-        self.contact_cache = None  # сбрасываем кеш, при следующем обращении к get_contact_list будет стоиться заново в этом методе
+        self.contact_cache = None  # сбрасываем кеш, при следующем обращении к get_contact_list будет строиться заново в этом методе
 
 
     def modify_first_contact(self):
