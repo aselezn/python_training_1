@@ -9,7 +9,7 @@ def test_del_some_group(app, db):
     old_groups = db.get_group_list()
     group = random.choice(old_groups)
     index = randrange(len(old_groups))
-    app.group.delete_group_by_id(group.id) #теперь удаляем случайную группу
+    app.group.delete_group_by_id(group.id)
     new_groups = db.get_group_list()
     assert len(old_groups) - 1 == app.group.count()
     old_groups.remove(group)

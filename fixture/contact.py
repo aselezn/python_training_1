@@ -121,6 +121,21 @@ class ContactHelper:
         self.contact_cache = None  # сбрасываем кеш, при следующем обращении к get_contact_list будет стоиться заново в этом методе
 
 
+    def delete_contact_by_id(self, id):
+        wd = self.app.wd
+        self.app.open_home_page()
+        self.select_contact_by_id(id)
+        wd.find_element_by_xpath("//input[@value='Delete']").click()
+        wd.switch_to.alert.accept()
+        self.retern_to_home_page()
+        self.contact_cache = None
+
+
+    def select_contact_by_id(self, id):
+        wd = self.app.wd
+        wd.find_element_by_css_selector("input[value='%s']" % id).click()
+
+
     def delete_first_contact(self):
         self.delete_contact_by_index(0) #удаляем первый контакт (счет всегда идет с 0)
 
