@@ -3,12 +3,12 @@ from model.group import Group
 
 
 
-def test_add_group(app, json_groups): #json - указывает на файл формата json в пакете data
+def test_add_group(app, db, json_groups): #json - указывает на файл формата json в пакете data
     group = json_groups
-    old_groups = app.group.get_group_list()
+    old_groups = db.get_group_list()
     app.group.create(group)
     assert len(old_groups) + 1 == app.group.count() #используем count (выступает в роли хэша), выполянется быстрее чем основная функция
-    new_groups = app.group.get_group_list()
+    new_groups = db.get_group_list()
     old_groups.append(group)
     assert sorted(old_groups, key=Group.id_or_max) == sorted(new_groups, key=Group.id_or_max)
 

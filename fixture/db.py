@@ -13,7 +13,8 @@ class DbFixture:
         self.connection = pymysql.connect(host=host,
                              user=user,
                              password=password,
-                             database=name
+                             database=name,
+                             autocommit=True #кеш во время кадого запроса будет сбрасываться
                             )
 
 
