@@ -154,6 +154,20 @@ class ContactHelper:
         self.contact_cache = None  # сбрасываем кеш, при следующем обращении к get_contact_list будет строиться заново в этом методе
 
 
+    def modify_contact_by_id(self, new_contact_data, id):
+        wd = self.app.wd
+        self.app.open_home_page()
+        wd.find_element_by_css_selector("tr[name='entry'] a[href='edit.php?id=%s'" % id).click()
+        #wd.get("http://localhost/addressbook/edit.php?id=5")
+        # update contact form
+        self.fill_contact_form(new_contact_data)
+        # submit edit
+        wd.find_element_by_name("update").click()
+        #wd.get("http://localhost/addressbook/edit.php")
+        self.retern_to_home_page()
+        self.contact_cache = None
+
+
     def modify_first_contact(self):
         self.modify_contact_by_indeх(0)
 
