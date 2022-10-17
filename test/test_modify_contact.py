@@ -16,7 +16,7 @@ def test_modify_some_contact(app, db, check_ui):
                       notes="notes_updated")
     contact.id = old_contacts[index].id
     app.contact.modify_contact_by_id(contact, old_contact_id)
-    new_contacts = db.get_contact_list(
+    new_contacts = db.get_contact_list()
     assert sorted(old_contacts, key=Contact.id_or_max) == sorted(new_contacts, key=Contact.id_or_max)
     if check_ui:
         assert sorted(new_contacts, key=Contact.id_or_max) == sorted(app.group.get_contact_list(), key=Contact.id_or_max)
